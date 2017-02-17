@@ -17,7 +17,7 @@ In the first version of this project, I used the following hardware:
 
 Assembled, it looks like this:
 
-![Assembled with Powerswitch Tail](images/figure-01.png)
+![Assembled with Powerswitch Tail](/images/figure-01.png)
 
 The Feather and Featherwing are connected together (using the header kit shown in the parts list) and sit inside the enclosure and receive power from a standard smartphone charger (not shown). Wires from the Featherwing Analog output connect to the Powerswitch Tail and control the power passing through the power cable. When power is supplied across those wires, a relay in the Powerswitch Tail closes and allows power to pass through the cable shown in the figure. The push button on the enclosure enables you to manually toggle the relay as needed.
 
