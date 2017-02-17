@@ -40,7 +40,7 @@ const int outputPin = A1;
 //button is connected to Analog Pin 2 on the Arduino device.
 const int buttonPin = A2;
 
-//Set the timezone using the timezone defines listes above.
+//Set the time zone using the time zone defines listes above.
 //You'll have to switch the device from standard time to daylight time
 //during the summer if you live in an area that observes daylight time.
 const int timeZone = EST;
@@ -62,9 +62,9 @@ const int timeZone = EST;
 // Turn the relay on at 5:30 AM, turn the relay off at 7:00 AM.
 // {530, 700}
 int slots[NUMSLOTS][2] = {
-  { 1105, 1106 },
-  {1107, 1108},
-  {1930, 2300}
+  { 600, 800 },
+  {1700, 1830},
+  {1900, 2300}
 };
 //============================================================
 
