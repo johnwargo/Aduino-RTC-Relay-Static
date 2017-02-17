@@ -25,7 +25,7 @@
 #include <WiFiUdp.h>
 //Local libraries
 #include "constants.h"
-#include "Wi-Fi-Config.h"
+#include "wi-fi-config.h"
 
 //============================================================
 // USER CONFIGURABLE OPTIONS
