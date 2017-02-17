@@ -88,7 +88,7 @@ The slots array values are represented in the following format: `{ onTime, offTi
 	
 To turn the relay on at 6:00 AM, and turn it off 8:00 AM, use:
 
-	{ 600, 800 },
+	{ 600, 800 }
 
 To turn the relay on at 5:00 PM, and turn it off at 11:00 PM, use:
 
