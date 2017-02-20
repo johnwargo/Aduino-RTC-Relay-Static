@@ -64,6 +64,8 @@ const int timeZone = EST;
 int slots[NUMSLOTS][2] = {
   { 600, 800 },
   {1800, 2300}  
+  //BE SURE TO UPDATE THE NUMSLOTS CONSTANT IF YOU ADD/REMOVE
+  //ROWS FROM THIS ARRAY
 };
 //============================================================
 
