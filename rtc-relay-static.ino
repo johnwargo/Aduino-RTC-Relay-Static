@@ -40,9 +40,9 @@ const int outputPin = A1;
 //button is connected to Analog Pin 2 on the Arduino device.
 const int buttonPin = A2;
 
-//Set the time zone using the time zone defines listes above.
-//You'll have to switch the device from standard time to daylight time
-//during the summer if you live in an area that observes daylight time.
+//Set the time zone using the time zones listed in constants.h.
+//You'll have to manually switch the device from standard time to daylight 
+//time during the summer if you live in an area that observes daylight time.
 const int timeZone = EST;
 
 //Wi-Fi settings are in an external file: wifi-config.h
@@ -63,7 +63,7 @@ const int timeZone = EST;
 // {530, 700}
 int slots[NUMSLOTS][2] = {
   { 600, 800 },
-  {1800, 2300}  
+  {2000, 2300}  
   //BE SURE TO UPDATE THE NUMSLOTS CONSTANT IF YOU ADD/REMOVE
   //ROWS FROM THIS ARRAY
 };
