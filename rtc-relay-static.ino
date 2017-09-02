@@ -41,7 +41,7 @@ const int outputPin = A1;
 const int buttonPin = A2;
 
 //Set the time zone using the time zones listed in constants.h.
-//You'll have to manually switch the device from standard time to daylight 
+//You'll have to manually switch the device from standard time to daylight
 //time during the summer if you live in an area that observes daylight time.
 const int timeZone = EST;
 
@@ -62,10 +62,10 @@ const int timeZone = EST;
 // Turn the relay on at 5:30 AM, turn the relay off at 7:00 AM.
 // {530, 700}
 int slots[NUMSLOTS][2] = {
-  { 600, 800 },
-  {2000, 2300}  
-  //BE SURE TO UPDATE THE NUMSLOTS CONSTANT IF YOU ADD/REMOVE
-  //ROWS FROM THIS ARRAY
+    {600, 800},
+    {2000, 2300}
+    //BE SURE TO UPDATE THE NUMSLOTS CONSTANT IF YOU ADD/REMOVE
+    //ROWS FROM THIS ARRAY
 };
 //============================================================
 
@@ -114,9 +114,10 @@ char timeServer[] = "time.nist.gov";
 // NTP time stamp is in the first 48 bytes of the message
 const int NTP_PACKET_SIZE = 48;
 //buffer to hold incoming and outgoing packets
-byte packetBuffer[ NTP_PACKET_SIZE];
+byte packetBuffer[NTP_PACKET_SIZE];
 
-void setup() {
+void setup()
+{
 
   //Initialize serial
   Serial.begin(9600);
@@ -142,44 +143,53 @@ void setup() {
   Serial.println("\nChecking software configuration");
 
   // Make sure our slot array is populated with valid times
-  for (int i = 0; i < NUMSLOTS; i++) {
+  for (int i = 0; i < NUMSLOTS; i++)
+  {
     //Get our time values
     int onTime = slots[i][0];
     int offTime = slots[i][1];
 
     // Is onTime valid?
-    if (!isValidTime(onTime)) {
+    if (!isValidTime(onTime))
+    {
       //That won't work, so display an error
       Serial.print(SLOTERRORSTR);
       Serial.println(onTime);
-      while (true);
+      while (true)
+        ;
     }
 
     // Is offTime valid?
-    if (!isValidTime(offTime)) {
+    if (!isValidTime(offTime))
+    {
       //That won't work, so display an error
       Serial.print(SLOTERRORSTR);
       Serial.println(offTime);
-      while (true);
+      while (true)
+        ;
     }
 
     //Are onTime and offTime the same?
-    if (onTime == offTime) {
+    if (onTime == offTime)
+    {
       //That won't work, so display an error
       Serial.print(SLOTERRORSTR);
       Serial.print("OnTime and OffTime cannot have the same value; slot #");
       Serial.println(i);
-      while (true);
+      while (true)
+        ;
     }
 
     // Is onTime AFTER offTime?
-    if ( onTime > offTime) {
+    if (onTime > offTime)
+    {
       //That won't work, so display an error
       Serial.print(SLOTERRORSTR);
       Serial.print("offTime preceeds onTime in slot #");
       Serial.println(i);
       // and hop into an infinite loop
-      while (true);
+      while (true)
+        ;
     }
   }
 
@@ -187,11 +197,13 @@ void setup() {
   //Assumes your SSID has a password
   //Change to the following if you don't have/need a SSID password
   //if (wifi_ssid == blankStr) {
-  if (wifi_ssid == BLANKSTR || wifi_pass == BLANKSTR) {
+  if (wifi_ssid == BLANKSTR || wifi_pass == BLANKSTR)
+  {
     //No? then there's nothing we can do
     Serial.println("One or more required Wi-Fi settings are empty, check the wifi-config.h file.");
     //loop forever
-    while (true);
+    while (true)
+      ;
   }
 
   //==================================================
@@ -199,27 +211,34 @@ void setup() {
   //==================================================
   Serial.println("Checking hardware");
   // check for the presence of the shield:
-  if (WiFi.status() == WL_NO_SHIELD) {
+  if (WiFi.status() == WL_NO_SHIELD)
+  {
     Serial.println("Wi-Fi shield not found");
     //loop forever
-    while (true);
+    while (true)
+      ;
   }
 
-  if (! rtc.begin()) {
+  if (!rtc.begin())
+  {
     Serial.println("RTC board not found");
     //loop forever
-    while (true);
+    while (true)
+      ;
   }
 
   //Has the RTC board been initialized?
-  if (! rtc.initialized()) {
+  if (!rtc.initialized())
+  {
     //RTC hasn't been initialized, so it has no time/date value
     Serial.println("RTC is not initialized");
     //The following line sets the RTC to the date & time this sketch was compiled
     //This assumes initializing the RTC immediately after compile, which you would
     //do when you flash the firmware on the device.
     rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
-  } else {
+  }
+  else
+  {
     Serial.println("RTC is initialized");
   }
 
@@ -227,7 +246,8 @@ void setup() {
   // Connect to the network
   //==================================================
   // attempt to connect to the Wi-Fi network:
-  while (status != WL_CONNECTED) {
+  while (status != WL_CONNECTED)
+  {
     Serial.print("Connecting to ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
@@ -248,7 +268,8 @@ void setup() {
   //Set the lastMin variable to one minute before now
   lastMin = rtc.now().minute() - 1;
   //if we went into negative numbers (because the minute was 0)
-  if (lastMin < 0) {
+  if (lastMin < 0)
+  {
     lastMin = 59;
   }
 
@@ -256,15 +277,16 @@ void setup() {
   flashxTimes(2);
 
   //we just started, are we supposed to have the relay on at this time?
-  if (isInOnPeriod()) {
+  if (isInOnPeriod())
+  {
     //turn on the relay
     Serial.println("\nWhoops, we're supposed to be on!");
     setRelay(true);
   }
-
 }
 
-void loop() {
+void loop()
+{
 
   //Variable used to store button status as its read
   int buttonState;
@@ -272,19 +294,25 @@ void loop() {
   //Read button state (pressed or not pressed?)
   buttonState = digitalRead(buttonPin);
   //If button pressed...
-  if (buttonState == LOW) {
+  if (buttonState == LOW)
+  {
     //Serial.println("Detected button press");
-    if (!buttonPushed) {
+    if (!buttonPushed)
+    {
       //Serial.println("Unique button press");
       //toggle the relay
       toggleRelay();
-    } else {
+    }
+    else
+    {
       //Serial.println("Skipping, button is still pushed");
     }
     //then reset our flag so it doesn't execute again
     //until the program reads that the button ISN'T pushed
     buttonPushed = true;
-  } else {
+  }
+  else
+  {
     //the button isn't pressed...
     //first, reset the buttonPushed flag, indicating that the button isn't pushed
     //this time through the loop
@@ -295,32 +323,40 @@ void loop() {
     //Get the current minute
     currentMin = currentTime.minute();
     //Has the minute changed?
-    if (currentMin != lastMin) {
+    if (currentMin != lastMin)
+    {
       Serial.println("Minute mark");
       //Yes? Then do something, or at least check to see if
       //we're supposed to do something.
       //Get the current time in 24 hour format
       int theTime = getTime24();
       //Loop through our array
-      for (int i = 0; i < NUMSLOTS; i++) {
+      for (int i = 0; i < NUMSLOTS; i++)
+      {
         //Get the on and off times
         int onTime = slots[i][0];
         int offTime = slots[i][1];
         //Should we be turning the relay on?
-        if (theTime == onTime) {
+        if (theTime == onTime)
+        {
           //Then turn it on
           setRelay(true);
-        } else {
+        }
+        else
+        {
           //Should we be turning the relay off?
-          if (theTime == offTime) {
+          if (theTime == offTime)
+          {
             //Then turn it off
             setRelay(false);
           }
         } //if
-      } //for
+      }   //for
       //Set the last minute pointer to the current minute.
       lastMin = currentMin;
-    } else {
+    }
+    else
+    {
       // The minute hasn't changed, so skip
       //Serial.println("Skipping");
     }
@@ -328,29 +364,32 @@ void loop() {
 
   //Wait approximately for interLoopDelay miliseconds before doing it all again
   delay(INTERLOOPDELAY);
-
 }
 
-int getTime24() {
+int getTime24()
+{
   // Return the current time as an integer value in 24 hour format
   DateTime theTime = rtc.now();
   return (theTime.hour() * 100) + theTime.minute();
 }
 
-bool isValidTime(int timeVal) {
+bool isValidTime(int timeVal)
+{
   //Make sure the time value is between 0 and 2359 with
   // no minute value greater than 59
   return ((timeVal > -1) && (timeVal < 2360) && (timeVal % 100 < 60));
 }
 
-
-bool isInOnPeriod() {
+bool isInOnPeriod()
+{
   //Loop through the active slots array to see if the relay is
   //supposed to be on. This assumes the device just powered on
   //and it doesn't know whether it's supposed to be on or not.
   int timeVal = getTime24();
-  for (int i = 0; i < NUMSLOTS; i++) {
-    if ((timeVal > slots[i][0] ) && (timeVal < slots[i][1])) {
+  for (int i = 0; i < NUMSLOTS; i++)
+  {
+    if ((timeVal > slots[i][0]) && (timeVal < slots[i][1]))
+    {
       //yep, we're supposed to be on
       return true;
     }
@@ -358,29 +397,36 @@ bool isInOnPeriod() {
   return false;
 }
 
-void flashxTimes(int numTimes) {
+void flashxTimes(int numTimes)
+{
   //Cycle the relay numtimes times.
   //Assumes we're starting with the relay off
   //Do it twice for each loop, on, and off.
   int loopEnd = numTimes * 2;
-  for (int i = 1; i <= loopEnd; i++) {
+  for (int i = 1; i <= loopEnd; i++)
+  {
     toggleRelay();
     delay(250);
   }
 }
 
-void toggleRelay() {
+void toggleRelay()
+{
   //Flips the relay from on to off or off to on
   setRelay(!relayStatus);
 }
 
-void setRelay(bool status) {
+void setRelay(bool status)
+{
   //Set the relay to a specific status (on=true/off=false)
   Serial.print("Relay: ");
-  if (status) {
+  if (status)
+  {
     Serial.println("ON");
     analogWrite(outputPin, MAXOUTPUT);
-  } else {
+  }
+  else
+  {
     Serial.println("OFF");
     analogWrite(outputPin, MINOUTPUT);
   }
@@ -389,7 +435,8 @@ void setRelay(bool status) {
   relayStatus = status;
 }
 
-void printWifiStatus() {
+void printWifiStatus()
+{
   // print the SSID of the network you're attached to:
   Serial.print("SSID: ");
   Serial.println(WiFi.SSID());
@@ -407,20 +454,21 @@ void printWifiStatus() {
 }
 
 // send an NTP request to the time server
-void sendNTPpacket(char* address) {
+void sendNTPpacket(char *address)
+{
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
   // Initialize values needed to form NTP request
   // (see URL above for details on the packets)
-  packetBuffer[0] = 0b11100011;   // LI, Version, Mode
-  packetBuffer[1] = 0;     // Stratum, or type of clock
-  packetBuffer[2] = 6;     // Polling Interval
-  packetBuffer[3] = 0xEC;  // Peer Clock Precision
+  packetBuffer[0] = 0b11100011; // LI, Version, Mode
+  packetBuffer[1] = 0;          // Stratum, or type of clock
+  packetBuffer[2] = 6;          // Polling Interval
+  packetBuffer[3] = 0xEC;       // Peer Clock Precision
   // 8 bytes of zero for Root Delay & Root Dispersion
-  packetBuffer[12]  = 49;
-  packetBuffer[13]  = 0x4E;
-  packetBuffer[14]  = 49;
-  packetBuffer[15]  = 52;
+  packetBuffer[12] = 49;
+  packetBuffer[13] = 0x4E;
+  packetBuffer[14] = 49;
+  packetBuffer[15] = 52;
   // all NTP fields have been given values, now
   // you can send a packet requesting a timestamp:
   Udp.beginPacket(address, 123); //NTP requests are to port 123
@@ -428,19 +476,23 @@ void sendNTPpacket(char* address) {
   Udp.endPacket();
 }
 
-time_t getNTPTime() {
-  while (Udp.parsePacket() > 0) ; // discard any previously received packets
+time_t getNTPTime()
+{
+  while (Udp.parsePacket() > 0)
+    ; // discard any previously received packets
   Serial.println("Sending NTP Request");
   sendNTPpacket(timeServer);
   uint32_t beginWait = millis();
-  while (millis() - beginWait < 1500) {
+  while (millis() - beginWait < 1500)
+  {
     int size = Udp.parsePacket();
-    if (size >= NTP_PACKET_SIZE) {
+    if (size >= NTP_PACKET_SIZE)
+    {
       //We got a response
-      Udp.read(packetBuffer, NTP_PACKET_SIZE);  // read packet into the buffer
+      Udp.read(packetBuffer, NTP_PACKET_SIZE); // read packet into the buffer
       unsigned long secsSince1900, adjustedTime;
       // convert four bytes starting at location 40 to a long integer
-      secsSince1900 =  (unsigned long)packetBuffer[40] << 24;
+      secsSince1900 = (unsigned long)packetBuffer[40] << 24;
       secsSince1900 |= (unsigned long)packetBuffer[41] << 16;
       secsSince1900 |= (unsigned long)packetBuffer[42] << 8;
       secsSince1900 |= (unsigned long)packetBuffer[43];
@@ -459,4 +511,3 @@ time_t getNTPTime() {
   Serial.println("No NTP Response\n");
   return 0; // return 0 if unable to get the time
 }
-
