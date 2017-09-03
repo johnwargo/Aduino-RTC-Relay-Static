@@ -1,5 +1,18 @@
 # Arduino RTC Relay - Static
 
+<!-- toc -->
+
+* [Hardware](#hardware)
+* [Configuring the Arduino Sketch](#configuring-the-arduino-sketch)
+  * [Analog Pins](#analog-pins)
+  * [Time Zone](#time-zone)
+  * [Slots Array](#slots-array)
+* [Additional Resources](#additional-resources)
+* [Update History](#update-history)
+
+<!-- toc stop -->
+
+
 An Arduino project for turning on/off a relay at a scheduled time. The project uses the Adafruit Feather and a real-time clock to ensure accuracy. This project is essentially a hand-made version of those light timers you buy to control your house lights when you're on vacation. The difference is that this version supports a virtually unlimited number of on/off timeslots plus sets its internal clock automatically using a network time server. 
 
 This is the **Static** version of the project, it turns the relay on and off at set times (controlled via settings within the Arduino sketch). A subsequent version of this project will enable you to use Solar data (sunrise and sunset) to control when the relay turns on and/or off.
@@ -132,4 +145,4 @@ When you run the sketch, use the **Arduino IDE Serial Monitor** to make sure you
 Nothing yet.
 
 ***
-By [John M. Wargo](http://www.johnwargo.com) - If you find this code useful, and feel like thanking me for providing it, please consider making a purchase from [my Amazon Wish List](https://amzn.com/w/1WI6AAUKPT5P9). You can find information on many different topics on my [personal blog](http://www.johnwargo.com). Learn about all of my publications at [John Wargo Books](http://www.johnwargobooks.com). 
+By [John M. Wargo](http://www.johnwargo.com) - If you find this code useful, and feel like thanking me for providing it, please consider making a purchase from [my Amazon Wish List](https://amzn.com/w/1WI6AAUKPT5P9). You can find information on many different topics on my [personal blog](http://www.johnwargo.com). Learn about all of my publications at [John Wargo Books](http://www.johnwargobooks.com).
